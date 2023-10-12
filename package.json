@@ -1,0 +1,30 @@
+{
+  "name": "middleware-mvc",
+  "version": "1.0.0",
+  "description": "a Node.js/Express API following the Model-View-Controller (MVC) architectural pattern utilizing middleware is a common and effective approach.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kezzico/middleware-mvc.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Middleware",
+    "Express"
+  ],
+  "author": "KEZZI.CO LLC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kezzico/middleware-mvc/issues"
+  },
+  "homepage": "https://github.com/kezzico/middleware-mvc#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.1",
+    "pg-connection-string": "^2.6.2"
+  }
+}
