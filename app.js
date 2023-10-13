@@ -24,16 +24,30 @@ const dbpool = mysql2.createPool({
 
 console.log("EXPRESS HTTP SERVER INITIALIZING ---")
 const express = require("express")()
-const jsonware = require("express").json()
-const userModel = require("./models/userModel")(dbpool)
+const encodingware = require("express").urlencoded({ extended: true })
+const cookieParser = require("cookie-parser")
 
+const userModel = require("./models/userModel")(dbpool)
 const userController = require("./controllers/userController")(userModel)
+const viewsController = require("./controllers/viewsController")(userModel)
 
 express.listen(process.env.PORT, () => { 
     console.log(`EXPRESS LISTENING ON PORT ${process.env.PORT} ---`)
 
-    console.log("adding JSON middleware")
-    express.use(jsonware);
+    console.log("adding 'encoding' middleware")
+    express.use(encodingware);
+
+    console.log("adding 'cookie-parser' middleware")
+    express.use(cookieParser())
+
+    console.log("adding 'bag' middleware")
+    express.use((req, res, next) => {
+        console.log('empty bag created')
+        req.bag = { /* create an empty bag for holding things */ }
+        next()
+    })
+
+    express.set('view engine', 'ejs');
 
     console.log("adding logging middleware")
     express.use((req, res, next) => {
@@ -42,8 +56,15 @@ express.listen(process.env.PORT, () => {
     });
       
     console.log("adding route '/'")
-    express.get("/", (req, res) => { res.send("✅")})
+    express.get("/", viewsController.index)
+
+    console.log("adding route '/user/profile'")
+    express.get("/user/profile", userController.bagcookie, viewsController.profile)
 
     console.log("adding route '/user/login'")
-    express.post("/user/login", userController.login)
+    express.post("/user/login", 
+        userController.checkpassword, 
+        userController.bakecookie, (req, res) => {
+            res.redirect("/user/profile")
+        })
 })

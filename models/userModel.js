@@ -5,18 +5,45 @@ module.exports = function (dbpool) {
 
             const sql = await dbpool.getConnection()
             
-            const users = await sql.execute(`
-                SELECT * FROM users
-                WHERE email = ?
-            `, [email])
+            try {
+                console.log('find user with email', email)
+                const users = await sql.execute(`
+                    SELECT * FROM users
+                    WHERE email = ?
+                `, [email])
+                console.log('found', users[0][0])
 
-            return users[0][0]
+                return users[0][0]
+            } catch {
+                console.log('💩')
+
+            } finally {
+                // if sql.release is not called then sql will hang 
+                sql.release()
+            }
         },
 
-        findUserId: async (userId) => {
+        findById: async (options) => {
+            const { id } = options
+
             const sql = await dbpool.getConnection()
             
-            sql.execute("SELECT * FROM users ")
+            try {
+                console.log('find user with user_id', id)
+                const users = await sql.execute(`
+                    SELECT * FROM users
+                    WHERE user_id = ?
+                `, [id])
+                console.log('found', users[0][0])
+                
+                return users[0][0]
+            } catch {
+                console.log('💩')
+
+            } finally {
+                // if sql.release is not called then sql will hang 
+                sql.release()
+            }
         }
     }
 }

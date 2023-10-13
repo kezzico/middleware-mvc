@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <style>
+            html, body {
+                padding: 0em;
+                margin: 0em;
+
+            }
+            body {
+                background-color: rgb(246 246 255);
+                font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                font-size: 2em;
+            }
+            h1 {
+                max-width: 640px;
+                margin: auto;
+            }
+            form {
+                background: white;
+                display: block;
+                margin: auto;
+                padding: 1em 0em;
+            }
+
+            form .formblock {
+                padding: 0.5em 2em;
+                max-width: 640px;
+                margin: auto;
+            }
+
+            form label {
+                display: inline-block;
+                font-weight: bold;
+            }
+
+            input[type=checkbox] {
+                width: 2em; height: 2em;
+            }
+            input[type=text],input[type=password] {
+                height: 1em;
+                width: 100%;
+                font-size: 1em;
+                padding: 1em 0.1em;
+            }
+            button {
+                font-size: 1em;
+                border-bottom: solid black 4px;
+                border-radius: 3em;
+                padding: 0.2em 1em;
+                background-color: rgb(167, 167, 255);
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>LOGIN</h1>
+        <form action="/user/login" method="post">
+            <div class="formblock">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+        
+            <div class="formblock">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="formblock">
+                <input type="checkbox" id="showPassword">
+                <label for="showPassword">Show Password</label>
+            </div>
+            <script>
+                const showPasswordCheckbox = document.getElementById('showPassword');
+                const passwordField = document.getElementById('password');
+              
+                showPasswordCheckbox.addEventListener('change', function () {
+                  if (showPasswordCheckbox.checked) {
+                    passwordField.type = 'text';
+                  } else {
+                    passwordField.type = 'password';
+                  }
+                });
+            </script>            
+            <div class="formblock">
+                <button type="submit">Login</button>
+            </div>
+          </form>        
+    </body>
+</html>
