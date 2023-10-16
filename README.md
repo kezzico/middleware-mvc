@@ -2,7 +2,11 @@
 
 This Node.js project is a web application that utilizes the Express.js framework and a MySQL database to create a user-centric platform. To provide a meaningful example of the MVC pattern, the project employs various middleware for data processing, such as handling form submissions, cookies, logging, and parameter passing.
 
-In the spirit of MVC architecture, this project utilizes middlewares to symbolically position modules as *controllers*. *Models* are injected into controllers. *Views* are rendered using EJS. Using a custom middleware know as the *bag*, data flows downstream through each controller used to process HTTP requests.
+No external dependencies are used to create an *MVC Framework*. Instead, this sample uses the mechanisms already present in Express to model MVC architecture.
+
+This project utilizes middlewares to symbolically position modules as **controllers**. **Models** are injected into controllers. **Views** are rendered using EJS. 
+
+Using a 1 liner middleware know as *the bag*, state values flows downstream through each controller **action** used to process the HTTP requests.
 
 ## KEY FEATURES
 
