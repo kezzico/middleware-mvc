@@ -23,46 +23,48 @@ const dbpool = mysql2.createPool({
   });
 
 console.log("EXPRESS HTTP SERVER INITIALIZING ---")
-const express = require("express")()
-const encodingware = require("express").urlencoded({ extended: true })
+const express = require("express")
+const app = express()
+
+const encodingware = express.urlencoded({ extended: true })
 const cookieParser = require("cookie-parser")
 
 const userModel = require("./models/userModel")(dbpool)
 const userController = require("./controllers/userController")(userModel)
 const viewsController = require("./controllers/viewsController")(userModel)
 
-express.listen(process.env.PORT, () => { 
+app.listen(process.env.PORT, () => { 
     console.log(`EXPRESS LISTENING ON PORT ${process.env.PORT} ---`)
 
     console.log("adding 'encoding' middleware")
-    express.use(encodingware);
+    app.use(encodingware);
 
     console.log("adding 'cookie-parser' middleware")
-    express.use(cookieParser())
+    app.use(cookieParser())
 
     console.log("adding 'bag' middleware")
-    express.use((req, res, next) => {
+    app.use((req, res, next) => {
         console.log('empty bag created')
         req.bag = { /* create an empty bag for holding things */ }
         next()
     })
 
-    express.set('view engine', 'ejs');
+    app.set('view engine', 'ejs');
 
     console.log("adding logging middleware")
-    express.use((req, res, next) => {
+    app.use((req, res, next) => {
         console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
         next();
     });
       
     console.log("adding route '/'")
-    express.get("/", viewsController.index)
+    app.get("/", viewsController.index)
 
     console.log("adding route '/user/profile'")
-    express.get("/user/profile", userController.bagcookie, viewsController.profile)
+    app.get("/user/profile", userController.bagcookie, viewsController.profile)
 
     console.log("adding route '/user/login'")
-    express.post("/user/login", 
+    app.post("/user/login", 
         userController.checkpassword, 
         userController.bakecookie, (req, res) => {
             res.redirect("/user/profile")

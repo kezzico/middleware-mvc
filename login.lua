@@ -1,3 +1,5 @@
+-- wrk -t4 -c10 -d30s -s login.lua http://localhost:3000
+
 -- wrk.method = "POST"
 -- wrk.headers["Content-Type"] = "application/json"
 -- wrk.body = {"email": "user1@example.com", "password": "password1"}
